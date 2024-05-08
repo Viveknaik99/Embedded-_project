@@ -1,0 +1,467 @@
+BL51 BANKED LINKER/LOCATER V5.14                                                        12/15/2023  14:35:34  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.14, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, smart helmet.obj TO smart helmet RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  smart helmet.obj (SMART_HELMET)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?SLCMP)
+
+
+LINK MAP OF MODULE:  smart helmet (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         ?DT?SMART_HELMET
+            DATA    0015H     000BH     UNIT         _DATA_GROUP_
+            IDATA   0020H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     010AH     UNIT         ?PR?DISPLAY_DHT11?SMART_HELMET
+            CODE    090AH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0996H     0084H     UNIT         ?C?LIB_CODE
+            CODE    0A1AH     0080H     UNIT         ?PR?MAIN?SMART_HELMET
+            CODE    0A9AH     003DH     UNIT         ?PR?ULTRASONIC?SMART_HELMET
+            CODE    0AD7H     0031H     UNIT         ?CO?SMART_HELMET
+            CODE    0B08H     002AH     UNIT         ?PR?RECEIVE_DATA?SMART_HELMET
+            CODE    0B32H     0029H     UNIT         ?PR?DELAY_40MS?SMART_HELMET
+            CODE    0B5BH     0025H     UNIT         ?PR?INITLCD?SMART_HELMET
+            CODE    0B80H     0023H     UNIT         ?PR?_PRINT_STRING?SMART_HELMET
+            CODE    0BA3H     001FH     UNIT         ?PR?_DELAY_MS?SMART_HELMET
+            CODE    0BC2H     001BH     UNIT         ?PR?_DATA_LCD?SMART_HELMET
+            CODE    0BDDH     0014H     UNIT         ?PR?SEND_PULSE?SMART_HELMET
+            CODE    0BF1H     0010H     UNIT         ?PR?_CMD_LCD?SMART_HELMET
+            CODE    0C01H     000AH     UNIT         ?PR?RESPONSE?SMART_HELMET
+            CODE    0C0BH     0009H     UNIT         ?PR?GAS_SENSOR?SMART_HELMET
+            CODE    0C14H     0008H     UNIT         ?PR?REQUEST?SMART_HELMET
+            CODE    0C1CH     0005H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   smart helmet (?C_STARTUP)
+
+
+SEGMENT                                  DATA_GROUP 
+  +--> CALLED SEGMENT                  START    LENGTH
+------------------------------------------------------
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 2
+
+
+?C_C51STARTUP                          -----    -----
+  +--> ?PR?MAIN?SMART_HELMET
+  +--> ?C_INITSEG
+
+?PR?MAIN?SMART_HELMET                  -----    -----
+  +--> ?PR?INITLCD?SMART_HELMET
+  +--> ?PR?_CMD_LCD?SMART_HELMET
+  +--> ?CO?SMART_HELMET
+  +--> ?PR?_PRINT_STRING?SMART_HELMET
+  +--> ?PR?ULTRASONIC?SMART_HELMET
+  +--> ?PR?_DATA_LCD?SMART_HELMET
+  +--> ?PR?DISPLAY_DHT11?SMART_HELMET
+  +--> ?PR?_DELAY_MS?SMART_HELMET
+  +--> ?PR?GAS_SENSOR?SMART_HELMET
+
+?PR?INITLCD?SMART_HELMET               -----    -----
+  +--> ?PR?_CMD_LCD?SMART_HELMET
+  +--> ?PR?_DELAY_MS?SMART_HELMET
+
+?PR?_CMD_LCD?SMART_HELMET              -----    -----
+  +--> ?PR?_DELAY_MS?SMART_HELMET
+
+?PR?_PRINT_STRING?SMART_HELMET         001DH    0003H
+  +--> ?PR?_DATA_LCD?SMART_HELMET
+
+?PR?_DATA_LCD?SMART_HELMET             -----    -----
+  +--> ?PR?_DELAY_MS?SMART_HELMET
+
+?PR?ULTRASONIC?SMART_HELMET            0015H    0001H
+  +--> ?PR?SEND_PULSE?SMART_HELMET
+
+?PR?DISPLAY_DHT11?SMART_HELMET         0015H    0008H
+  +--> ?PR?_CMD_LCD?SMART_HELMET
+  +--> ?CO?SMART_HELMET
+  +--> ?PR?_PRINT_STRING?SMART_HELMET
+  +--> ?PR?REQUEST?SMART_HELMET
+  +--> ?PR?RESPONSE?SMART_HELMET
+  +--> ?PR?RECEIVE_DATA?SMART_HELMET
+  +--> ?PR?_DATA_LCD?SMART_HELMET
+
+?PR?REQUEST?SMART_HELMET               -----    -----
+  +--> ?PR?DELAY_40MS?SMART_HELMET
+
+?PR?RECEIVE_DATA?SMART_HELMET          -----    -----
+  +--> ?PR?DELAY_40MS?SMART_HELMET
+
+
+
+SYMBOL TABLE OF MODULE:  smart helmet (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:090AH         SEGMENT       ?C_C51STARTUP
+  I:0020H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 3
+
+
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:090DH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:090AH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:090AH         LINE#         133
+  C:090CH         LINE#         134
+  C:090DH         LINE#         135
+  C:090EH         LINE#         136
+  C:0910H         LINE#         185
+  C:0913H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SMART_HELMET
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0800H         PUBLIC        Display_DHT11
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:0008H         PUBLIC        range
+  C:0BCDH         PUBLIC        _data_lcd
+  B:00B0H.1       PUBLIC        EN
+  B:0090H.2       PUBLIC        Led
+  B:0090H.3       PUBLIC        sensor
+  B:00B0H.3       PUBLIC        echo
+  B:0090H.0       PUBLIC        UltrasonicSwitch
+  B:00B0H.0       PUBLIC        RS
+  C:0A1AH         PUBLIC        main
+  C:0BF1H         PUBLIC        _cmd_lcd
+  C:0BA7H         PUBLIC        _delay_ms
+  D:0089H         PUBLIC        TMOD
+  C:0B32H         PUBLIC        delay_40ms
+  B:00B0H.5       PUBLIC        trig
+  C:0BDDH         PUBLIC        send_pulse
+  D:000AH         PUBLIC        DHT11Switch
+  D:0082H         PUBLIC        DPTR
+  D:000BH         PUBLIC        D_Temp
+  D:000DH         PUBLIC        D_RH
+  D:000FH         PUBLIC        I_Temp
+  D:0011H         PUBLIC        I_RH
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 4
+
+
+  B:00B0H.4       PUBLIC        DHT11
+  C:0B08H         PUBLIC        Receive_data
+  C:0A9AH         PUBLIC        ultrasonic
+  C:0B80H         PUBLIC        _Print_String
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:0C01H         PUBLIC        Response
+  B:0088H.4       PUBLIC        TR0
+  B:0090H.1       PUBLIC        DHTSwitch
+  D:0013H         PUBLIC        checksum
+  D:0083H         PUBLIC        DPH
+  D:0082H         PUBLIC        DPL
+  C:0B5BH         PUBLIC        initlcd
+  C:0C14H         PUBLIC        Request
+  C:0C0BH         PUBLIC        Gas_Sensor
+  -------         PROC          INITLCD
+  C:0B5BH         LINE#         10
+  C:0B5BH         LINE#         11
+  C:0B5BH         LINE#         12
+  C:0B5DH         LINE#         13
+  C:0B62H         LINE#         14
+  C:0B65H         LINE#         16
+  C:0B6AH         LINE#         17
+  C:0B6DH         LINE#         19
+  C:0B72H         LINE#         20
+  C:0B75H         LINE#         22
+  C:0B7AH         LINE#         23
+  C:0B7DH         LINE#         25
+  C:0B7FH         LINE#         26
+  -------         ENDPROC       INITLCD
+  -------         PROC          _CMD_LCD
+  D:0007H         SYMBOL        command
+  C:0BF1H         LINE#         28
+  C:0BF1H         LINE#         29
+  C:0BF1H         LINE#         30
+  C:0BF3H         LINE#         31
+  C:0BF5H         LINE#         32
+  C:0BF7H         LINE#         33
+  C:0BFEH         LINE#         34
+  C:0C00H         LINE#         36
+  -------         ENDPROC       _CMD_LCD
+  -------         PROC          L?0059
+  -------         ENDPROC       L?0059
+  -------         PROC          _DATA_LCD
+  D:0007H         SYMBOL        databyte
+  C:0BCDH         LINE#         38
+  C:0BCDH         LINE#         39
+  C:0BCDH         LINE#         40
+  C:0BCFH         LINE#         41
+  C:0BD1H         LINE#         42
+  C:0BD3H         LINE#         43
+  C:0BDAH         LINE#         44
+  C:0BDCH         LINE#         45
+  -------         ENDPROC       _DATA_LCD
+  -------         PROC          _PRINT_STRING
+  D:001DH         SYMBOL        message
+  C:0B80H         LINE#         47
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 5
+
+
+  C:0B86H         LINE#         48
+  C:0B86H         LINE#         49
+  C:0B92H         LINE#         50
+  C:0B92H         LINE#         51
+  C:0B95H         LINE#         52
+  C:0BA0H         LINE#         53
+  C:0BA2H         LINE#         54
+  -------         ENDPROC       _PRINT_STRING
+  C:0BA3H         SYMBOL        L?0061
+  -------         PROC          L?0060
+  -------         ENDPROC       L?0060
+  C:0BA3H         SYMBOL        L?0061
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0005H         SYMBOL        t1
+  D:0002H         SYMBOL        t2
+  -------         ENDDO         
+  C:0BA7H         LINE#         58
+  C:0BA7H         LINE#         59
+  C:0BA7H         LINE#         63
+  C:0BB0H         LINE#         64
+  C:0BB0H         LINE#         65
+  C:0BBEH         LINE#         66
+  C:0BC1H         LINE#         67
+  -------         ENDPROC       _DELAY_MS
+  -------         PROC          DELAY_40MS
+  C:0B32H         LINE#         19
+  C:0B32H         LINE#         20
+  C:0B37H         LINE#         21
+  C:0B3CH         LINE#         22
+  C:0B41H         LINE#         23
+  C:0B46H         LINE#         24
+  C:0B4BH         LINE#         25
+  C:0B50H         LINE#         26
+  C:0B55H         LINE#         27
+  C:0B5AH         LINE#         28
+  -------         ENDPROC       DELAY_40MS
+  -------         PROC          REQUEST
+  C:0C14H         LINE#         31
+  C:0C14H         LINE#         32
+  C:0C14H         LINE#         33
+  C:0C16H         LINE#         34
+  C:0C19H         LINE#         35
+  C:0C1BH         LINE#         36
+  -------         ENDPROC       REQUEST
+  -------         PROC          RESPONSE
+  C:0C01H         LINE#         38
+  C:0C01H         LINE#         39
+  C:0C01H         LINE#         40
+  C:0C04H         LINE#         41
+  C:0C07H         LINE#         42
+  C:0C0AH         LINE#         43
+  -------         ENDPROC       RESPONSE
+  -------         PROC          RECEIVE_DATA
+  -------         DO            
+  D:0004H         SYMBOL        i
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 6
+
+
+  D:0006H         SYMBOL        dataD
+  -------         ENDDO         
+  C:0B08H         LINE#         46
+  C:0B08H         LINE#         47
+  C:0B08H         LINE#         48
+  C:0B0BH         LINE#         49
+  C:0B0DH         LINE#         50
+  C:0B10H         LINE#         51
+  C:0B13H         LINE#         52
+  C:0B1DH         LINE#         53
+  C:0B23H         LINE#         55
+  C:0B23H         LINE#         56
+  C:0B26H         LINE#         57
+  C:0B31H         LINE#         58
+  C:0B31H         LINE#         59
+  -------         ENDPROC       RECEIVE_DATA
+  -------         PROC          DISPLAY_DHT11
+  -------         DO            
+  D:0015H         SYMBOL        a
+  D:0017H         SYMBOL        b
+  D:0019H         SYMBOL        c
+  D:001BH         SYMBOL        d
+  -------         ENDDO         
+  C:0800H         LINE#         62
+  C:0800H         LINE#         63
+  C:0800H         LINE#         65
+  C:0805H         LINE#         66
+  C:080AH         LINE#         67
+  C:0813H         LINE#         68
+  C:0818H         LINE#         69
+  C:0821H         LINE#         70
+  C:0824H         LINE#         71
+  C:0827H         LINE#         72
+  C:082EH         LINE#         73
+  C:0835H         LINE#         74
+  C:083CH         LINE#         75
+  C:0843H         LINE#         76
+  C:084AH         LINE#         78
+  C:086AH         LINE#         79
+  C:086AH         LINE#         80
+  C:0873H         LINE#         81
+  C:0873H         LINE#         83
+  C:0873H         LINE#         84
+  C:0887H         LINE#         85
+  C:089BH         LINE#         86
+  C:08A0H         LINE#         87
+  C:08A5H         LINE#         88
+  C:08AAH         LINE#         89
+  C:08AFH         LINE#         90
+  C:08B4H         LINE#         91
+  C:08B9H         LINE#         93
+  C:08CDH         LINE#         94
+  C:08E1H         LINE#         95
+  C:08E6H         LINE#         96
+  C:08EBH         LINE#         97
+  C:08F0H         LINE#         98
+  C:08F5H         LINE#         99
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 7
+
+
+  C:08FAH         LINE#         100
+  C:08FFH         LINE#         101
+  C:0904H         LINE#         102
+  C:0909H         LINE#         104
+  C:0909H         LINE#         105
+  -------         ENDPROC       DISPLAY_DHT11
+  -------         PROC          SEND_PULSE
+  C:0BDDH         LINE#         107
+  C:0BDDH         LINE#         108
+  C:0BDDH         LINE#         109
+  C:0BE2H         LINE#         110
+  C:0BE4H         LINE#         111
+  C:0BE9H         LINE#         112
+  C:0BEEH         LINE#         113
+  C:0BF0H         LINE#         114
+  -------         ENDPROC       SEND_PULSE
+  -------         PROC          ULTRASONIC
+  -------         DO            
+  D:0015H         SYMBOL        get
+  -------         ENDDO         
+  C:0A9AH         LINE#         116
+  C:0A9AH         LINE#         117
+  C:0A9AH         LINE#         119
+  C:0A9DH         LINE#         120
+  C:0AA0H         LINE#         121
+  C:0AA3H         LINE#         122
+  C:0AA6H         LINE#         123
+  C:0AA9H         LINE#         124
+  C:0AAFH         LINE#         125
+  C:0AC2H         LINE#         126
+  C:0AD1H         LINE#         128
+  C:0AD4H         LINE#         129
+  C:0AD6H         LINE#         130
+  -------         ENDPROC       ULTRASONIC
+  -------         PROC          GAS_SENSOR
+  C:0C0BH         LINE#         137
+  C:0C0BH         LINE#         138
+  C:0C0BH         LINE#         140
+  C:0C0EH         LINE#         141
+  C:0C0EH         LINE#         142
+  C:0C10H         LINE#         143
+  C:0C11H         LINE#         145
+  C:0C11H         LINE#         146
+  C:0C13H         LINE#         147
+  C:0C13H         LINE#         148
+  -------         ENDPROC       GAS_SENSOR
+  -------         PROC          MAIN
+  C:0A1AH         LINE#         150
+  C:0A1AH         LINE#         152
+  C:0A1DH         LINE#         153
+  C:0A22H         LINE#         154
+  C:0A27H         LINE#         155
+  C:0A30H         LINE#         156
+  C:0A32H         LINE#         159
+  C:0A32H         LINE#         160
+  C:0A32H         LINE#         161
+  C:0A35H         LINE#         162
+BL51 BANKED LINKER/LOCATER V5.14                                                      12/15/2023  14:35:34  PAGE 8
+
+
+  C:0A35H         LINE#         163
+  C:0A38H         LINE#         164
+  C:0A3DH         LINE#         165
+  C:0A3FH         LINE#         167
+  C:0A44H         LINE#         168
+  C:0A4DH         LINE#         169
+  C:0A50H         LINE#         170
+  C:0A55H         LINE#         171
+  C:0A5DH         LINE#         172
+  C:0A6DH         LINE#         173
+  C:0A7BH         LINE#         174
+  C:0A82H         LINE#         175
+  C:0A84H         LINE#         176
+  C:0A86H         LINE#         178
+  C:0A89H         LINE#         179
+  C:0A89H         LINE#         184
+  C:0A8CH         LINE#         185
+  C:0A93H         LINE#         186
+  C:0A95H         LINE#         188
+  C:0A95H         LINE#         189
+  C:0A98H         LINE#         190
+  C:0A98H         LINE#         191
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SMART_HELMET
+
+  -------         MODULE        ?C?CLDPTR
+  C:0996H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?UIDIV
+  C:09AFH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?SLCMP
+  C:0A04H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 031FH BYTE (39%) *
+******************************************************************************
+
+Program Size: data=33.0 xdata=0 code=1060
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

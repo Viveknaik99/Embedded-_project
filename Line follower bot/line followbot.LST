@@ -1,0 +1,106 @@
+C51 COMPILER V7.50   LINE_FOLLOWBOT                                                        02/14/2024 15:12:05 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE LINE_FOLLOWBOT
+OBJECT MODULE PLACED IN line followbot.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE line followbot.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          sbit mot1=P1^0; // motor 1 connected port1.0
+   4          sbit mot2=P1^1; // motor 2 connected port1.1        
+   5          sbit mot3=P1^2; // motor 3 connected port1.2
+   6          sbit mot4=P1^3; // motor 4 connected port1.3
+   7          
+   8          sbit s_left=P0^0;  // IR sensor1 connected to port0.0
+   9          sbit s_right=P0^1; // IR sensor2 connected to port0.1
+  10          
+  11          void forward (void);
+  12          void backward (void);
+  13          void left (void);
+  14          void right (void);
+  15          
+  16          void forward (void)      // To move forward direction
+  17          {
+  18   1          mot1=0;
+  19   1              mot2=1;
+  20   1              mot3=1;
+  21   1              mot4=0;
+  22   1      }
+  23          
+  24          void backward (void) // TO move backward direction
+  25          {
+  26   1          mot1=0;
+  27   1              mot2=1;
+  28   1              mot3=0;
+  29   1              mot4=1;
+  30   1      }
+  31          
+  32          void left (void)  // To move  left side direction
+  33          {
+  34   1          mot1=0;
+  35   1              mot2=1;
+  36   1              mot3=0;
+  37   1              mot4=0;
+  38   1      }
+  39                                     
+  40          void right (void)  //To move right side direction
+  41          {
+  42   1          mot1=0;
+  43   1              mot2=0;
+  44   1              mot3=1;
+  45   1              mot4=0;
+  46   1      }
+  47          
+  48          void stop (void)   // To stop the rotation of the  both the motor
+  49          {
+  50   1          mot1=0;
+  51   1              mot2=0;
+  52   1              mot3=0;
+  53   1              mot4=0;
+  54   1      }
+  55          
+C51 COMPILER V7.50   LINE_FOLLOWBOT                                                        02/14/2024 15:12:05 PAGE 2   
+
+  56          void main()
+  57          {
+  58   1              s_left=1;  // IR senor  1 left
+  59   1              s_right=1; // IR sensor 2 right
+  60   1              while(1)
+  61   1              { 
+  62   2               if(s_left==0 && s_right==0)   // if both the sensor is 0 the bot will moves forward
+  63   2               {
+  64   3                       forward();
+  65   3               }
+  66   2               else if(s_left==1 && s_right==1) // if the both the senor is 1 the bot will stop moving
+  67   2               {
+  68   3               stop();
+  69   3               }
+  70   2               else if(s_left==0 && s_right==1)  // if the left sensor  is 0 and right sensor is 1 the bot will move  t
+             -owards left
+  71   2               {
+  72   3                       left();
+  73   3               }
+  74   2               else if(s_left==1 && s_right==0)       // if the left sensor  is 1  and right sensor  is 0 the bot will move t
+             -owards right
+  75   2               {
+  76   3             right();
+  77   3                 }
+  78   2                 }
+  79   1                 }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

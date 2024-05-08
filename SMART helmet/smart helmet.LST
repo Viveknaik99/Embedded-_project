@@ -1,0 +1,221 @@
+C51 COMPILER V7.50   SMART_HELMET                                                          12/15/2023 14:35:34 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE SMART_HELMET
+OBJECT MODULE PLACED IN smart helmet.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE smart helmet.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include"lcd.h"
+   2          #include"header.h"
+   3          #include<stdio.h>
+   4          
+   5          
+   6          sbit UltrasonicSwitch = P1^0; // Switch for Ultrasonic sensor
+   7          sbit DHTSwitch = P1^1;        // Switch for DHT11 sensor
+   8          sbit echo = P3^3;             // Ultrasonic Echo pin
+   9          sbit trig = P3^5;             // Ultrasonic Trig pin
+  10          sbit DHT11 = P3^4;            // DHT11 sensor data pin
+  11          sfr16 DPTR=0x82;
+  12          sbit sensor = P1^3;  // P1^3 is connected to the output of the MQ gas sensor
+  13          
+  14          unsigned int I_RH, D_RH, I_Temp, D_Temp, checksum;
+  15          unsigned char DHT11Switch;
+  16          unsigned int range=0;
+  17          
+  18          
+  19          void delay_40ms() {
+  20   1          _nop_(); _nop_();_nop_();_nop_();_nop_();
+  21   1          _nop_();_nop_();_nop_();_nop_();_nop_();
+  22   1          _nop_(); _nop_();_nop_();_nop_();_nop_();
+  23   1          _nop_();_nop_();_nop_();_nop_();_nop_();
+  24   1          _nop_(); _nop_();_nop_();_nop_();_nop_();
+  25   1          _nop_();_nop_();_nop_();_nop_();_nop_();
+  26   1          _nop_(); _nop_();_nop_();_nop_();_nop_();
+  27   1          _nop_();_nop_();_nop_();_nop_();_nop_();
+  28   1      }
+  29          
+  30          
+  31          void Request() 
+  32          {
+  33   1          DHT11 = 0;
+  34   1          delay_40ms();
+  35   1          DHT11 = 1;
+  36   1      }
+  37          
+  38          void Response() 
+  39          {
+  40   1          while(DHT11 == 1);
+  41   1          while(DHT11 == 0);
+  42   1          while(DHT11 == 1);
+  43   1      }
+  44          
+  45          
+  46          int Receive_data() 
+  47          {
+  48   1          int i, dataD = 0;
+  49   1          for(i = 0; i < 8; i++) {
+  50   2              while(DHT11 == 0);
+  51   2              delay_40ms();
+  52   2              if(DHT11 == 1)
+  53   2                  dataD = (dataD << 1) | (0x01);
+  54   2              else
+  55   2                  dataD = (dataD << 1);
+C51 COMPILER V7.50   SMART_HELMET                                                          12/15/2023 14:35:34 PAGE 2   
+
+  56   2              while(DHT11 == 1);
+  57   2          }
+  58   1          return dataD;
+  59   1      }
+  60          
+  61          
+  62          void Display_DHT11() 
+  63          {
+  64   1          unsigned int a, b, c, d;
+  65   1          cmd_lcd(0x01);
+  66   1          cmd_lcd(0x80);
+  67   1          Print_String("Humidity ");
+  68   1          cmd_lcd(0xC0);
+  69   1          Print_String("Temperature");
+  70   1          Request();
+  71   1          Response();
+  72   1          I_RH = Receive_data();
+  73   1          D_RH = Receive_data();
+  74   1          I_Temp = Receive_data();
+  75   1          D_Temp = Receive_data();
+  76   1          checksum = Receive_data();
+  77   1      
+  78   1          if((I_RH + D_RH + I_Temp + D_Temp) != checksum) 
+  79   1              {
+  80   2              Print_String("Error");
+  81   2          } 
+  82   1              else 
+  83   1              {
+  84   2              a = (I_RH / 10) + 48;
+  85   2              b = (I_RH % 10) + 48;
+  86   2              cmd_lcd(0x89);
+  87   2              data_lcd(a);
+  88   2              cmd_lcd(0x8A);
+  89   2              data_lcd(b);
+  90   2              cmd_lcd(0x8B);
+  91   2              data_lcd('%');
+  92   2      
+  93   2              c = (I_Temp / 10) + 48;
+  94   2              d = (I_Temp % 10) + 48;
+  95   2              cmd_lcd(0xCC);
+  96   2              data_lcd(c);
+  97   2              cmd_lcd(0xCD);
+  98   2              data_lcd(d);
+  99   2              cmd_lcd(0xCE);
+ 100   2              data_lcd(0xDF);
+ 101   2              cmd_lcd(0xCF);
+ 102   2              data_lcd('C');
+ 103   2          
+ 104   2              }
+ 105   1      }
+ 106          
+ 107          void send_pulse(void) 
+ 108          {
+ 109   1        TH0=0x00;TL0=0x00; 
+ 110   1         trig=1;
+ 111   1         _nop_();_nop_();_nop_();_nop_();_nop_();
+ 112   1         _nop_();_nop_();_nop_();_nop_();_nop_();
+ 113   1         trig=0;
+ 114   1      }
+ 115          
+ 116          unsigned char ultrasonic()
+ 117          {
+C51 COMPILER V7.50   SMART_HELMET                                                          12/15/2023 14:35:34 PAGE 3   
+
+ 118   1        unsigned char get;
+ 119   1        send_pulse();
+ 120   1        while(!echo);
+ 121   1        while(echo);
+ 122   1        DPH=TH0;
+ 123   1        DPL=TL0;
+ 124   1        TH0=TL0=0xff;
+ 125   1        if(DPTR<38000)
+ 126   1          get=DPTR/59;
+ 127   1        else
+ 128   1          get=0;
+ 129   1        return get;
+ 130   1      }
+ 131          
+ 132          
+ 133          
+ 134          
+ 135          
+ 136          
+ 137          void Gas_Sensor() 
+ 138          {
+ 139   1          // Assuming the Gas Sensor operation 
+ 140   1              if(sensor == 1)
+ 141   1              {
+ 142   2                      Led = 1;
+ 143   2              }
+ 144   1              else
+ 145   1              {
+ 146   2                      Led = 0;
+ 147   2              }
+ 148   1      }
+ 149          
+ 150          void main() {
+ 151   1          //Ultrasonic_Init();
+ 152   1          initlcd(); // Call your LCD initialization function
+ 153   1              cmd_lcd(0x01);
+ 154   1          cmd_lcd(0x80); // Set cursor to the beginning of the first line
+ 155   1          Print_String("LCD init..");
+ 156   1          delay_ms(100); // Delay for 40ms
+ 157   1          
+ 158   1      
+ 159   1          while (1) 
+ 160   1              {
+ 161   2              if (UltrasonicSwitch == 0) 
+ 162   2                      {
+ 163   3                              TMOD=0x09;
+ 164   3                              TH0=TL0=0;
+ 165   3                              TR0=1;
+ 166   3                              //initlcd();
+ 167   3                              cmd_lcd(0x01);
+ 168   3                              Print_String("DISTANCE:");
+ 169   3                              P3|=(1<<2);
+ 170   3                          cmd_lcd(0x8A);
+ 171   3                          range=ultrasonic();
+ 172   3                          data_lcd((range/100)+48);
+ 173   3                          data_lcd(((range/10)%10)+48);
+ 174   3                          data_lcd((range%10)+48);    
+ 175   3                              delay_ms(200);
+ 176   3                      }
+ 177   2                       
+ 178   2                      else if (DHTSwitch == 0) 
+ 179   2                      {
+C51 COMPILER V7.50   SMART_HELMET                                                          12/15/2023 14:35:34 PAGE 4   
+
+ 180   3               
+ 181   3                          //cmd_lcd(0x01); // Clear the LCD display
+ 182   3                              //cmd_lcd(0x80); // Set cursor to the beginning of the first line
+ 183   3                      //Print_String("Switch 2 pressed");
+ 184   3                  Display_DHT11();
+ 185   3                              delay_ms(100);
+ 186   3              }
+ 187   2                      else 
+ 188   2                      {
+ 189   3                  Gas_Sensor();
+ 190   3              }
+ 191   2          }
+ 192   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    731    ----
+   CONSTANT SIZE    =     49    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

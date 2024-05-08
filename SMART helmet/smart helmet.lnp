@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"smart helmet.obj" 
+TO "smart helmet" 
+RAMSIZE(256) 

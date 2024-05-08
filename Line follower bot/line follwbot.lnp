@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"line followbot.obj" 
+TO "line follwbot" 
+RAMSIZE(256) 
